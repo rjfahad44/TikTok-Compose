@@ -102,7 +102,6 @@ fun TikTokVerticalVideoPager(
 
             )
 
-
             Column(modifier = Modifier.align(Alignment.BottomCenter)) {
                 Row(
                     Modifier
