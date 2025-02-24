@@ -63,6 +63,7 @@ fun VideoPlayer(
             }
         }
     }
+
     if (pagerState.settledPage == pageIndex) {
         val exoPlayer = remember(context) {
             ExoPlayer.Builder(context).build().apply {
