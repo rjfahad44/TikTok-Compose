@@ -51,7 +51,6 @@ fun VideoPlayer(
     var thumbnail by remember {
         mutableStateOf<Pair<Bitmap?, Boolean>>(Pair(null, true))  //bitmap, isShow
     }
-    var isFirstFrameLoad = remember { false }
 
     LaunchedEffect(key1 = true) {
         withContext(Dispatchers.IO) {
@@ -75,7 +74,6 @@ fun VideoPlayer(
                 addListener(object : Player.Listener {
                     override fun onRenderedFirstFrame() {
                         super.onRenderedFirstFrame()
-                        isFirstFrameLoad = true
                         thumbnail = thumbnail.copy(second = false)
                     }
                 })
