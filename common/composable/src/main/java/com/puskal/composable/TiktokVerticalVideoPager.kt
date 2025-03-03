@@ -91,6 +91,7 @@ fun TikTokVerticalVideoPager(
                 onDoubleTap = { exoPlayer, offset ->
                     coroutineScope.launch {
                         videos[it].currentViewerInteraction.isLikedByYou = true
+                        onClickLike(videos[it].videoId, videos[it].currentViewerInteraction.isLikedByYou)
                         val rotationAngle = (-10..10).random()
                         doubleTapState = Triple(offset, true, rotationAngle.toFloat())
                         delay(400)
