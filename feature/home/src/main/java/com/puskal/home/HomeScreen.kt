@@ -65,7 +65,6 @@ fun HomeScreen(
                 },
                 edgePadding = edge
             ) {
-
                 tabItems.forEachIndexed { index, item ->
                     val isSelected = pagerState.currentPage == index
                     Tab(
@@ -76,8 +75,7 @@ fun HomeScreen(
                             }
                         },
                         text = {
-                            val textStyle =
-                                if (isSelected) MaterialTheme.typography.titleMedium.merge(
+                            val textStyle = if (isSelected) MaterialTheme.typography.titleMedium.merge(
                                     TextStyle(color = Color.White)
                                 )
                                 else TextStyle(
@@ -92,7 +90,5 @@ fun HomeScreen(
             }
         }
     }
-
-
 }
 
