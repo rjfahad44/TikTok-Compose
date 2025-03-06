@@ -134,7 +134,6 @@ fun TikTokVerticalVideoPager(
                 },
                 onVideoDispose = { pauseButtonVisibility = false },
                 onVideoGoBackground = { pauseButtonVisibility = false }
-
             )
 
             Column(modifier = Modifier.align(Alignment.BottomCenter)) {
@@ -268,6 +267,7 @@ fun SideItems(
                 isLiked = doubleTabState.second
             }
         }
+
         LikeIconButton(isLiked = isLiked,
             likeCount = item.videoStats.formattedLikeCount,
             onLikedClicked = {
@@ -313,7 +313,7 @@ fun SideItems(
                 .clickable {
                     onClickShare?.let { onClickShare.invoke() } ?: run {
                         context.share(
-                            text = "https://github.com/puskal-khadka"
+                            text = "https://github.com/rjfahad44"
                         )
                     }
                 }
