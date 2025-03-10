@@ -45,37 +45,30 @@ fun CreatorCard(
     onClickFollow: (userId: Long) -> Unit,
     onClickUser: (userId: Long) -> Unit
 ) {
-    val pageOffset =
-        ((pagerState.currentPage - page) + (pagerState.currentPageOffsetFraction)).absoluteValue
+    val pageOffset = (pagerState.currentPage - page + pagerState.currentPageOffsetFraction).absoluteValue
     Card(
-        modifier = Modifier
-            .graphicsLayer {
-                lerp(
-                    start = 0.9f,
-                    stop = 1f,
-                    fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                ).also { scale ->
-                    scaleX = scale
-                    scaleY = scale
-                }
-            },
+        modifier = Modifier.graphicsLayer {
+            val scale = lerp(0.9f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
+            scaleX = scale
+            scaleY = scale
+        },
         shape = RoundedCornerShape(8.dp)
     ) {
-        Box(Modifier
-            .drawWithCache {
-                onDrawWithContent {
-                    drawContent()
-                    val color: Color = lerp(
+        Box(
+            Modifier
+                .height(340.dp)
+                .drawWithCache {
+                    val color = lerp(
                         Color.Black.copy(alpha = 0.59f),
                         Color.Transparent,
-                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                        1f - pageOffset.coerceIn(0f, 1f)
                     )
-                    drawRect(color)
+                    onDrawWithContent {
+                        drawContent()
+                        drawRect(color)
+                    }
                 }
-            }
-            .height(340.dp)
         )
-
         {
             VideoPlayer(video = item.coverVideo,
                 pagerState = pagerState,
