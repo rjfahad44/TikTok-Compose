@@ -46,6 +46,7 @@ fun HomeScreen(
             HorizontalPager(
                 pageCount = tabItems.size,
                 state = pagerState,
+                key = { index -> index }
             ) {
                 when (it) {
                     0 -> FollowingScreen(navController, pagerState)
