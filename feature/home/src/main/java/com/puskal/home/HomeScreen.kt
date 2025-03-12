@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     navController: NavController
 ) {
+
     val tabItems = arrayListOf(R.string.following, R.string.for_you)
     val pagerState = rememberPagerState(initialPage = 1)
     val coroutineScope = rememberCoroutineScope()
