@@ -36,7 +36,6 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     navController: NavController
 ) {
-
     val tabItems = arrayListOf(R.string.following, R.string.for_you)
     val pagerState = rememberPagerState(initialPage = 1)
     val coroutineScope = rememberCoroutineScope()
@@ -56,6 +55,7 @@ fun HomeScreen(
             }
 
             val edge = LocalConfiguration.current.screenWidthDp.dp.div(2).minus(100.dp)
+
             ScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 containerColor = Color.Transparent,
@@ -82,9 +82,7 @@ fun HomeScreen(
                             }
                         },
                         text = {
-                            val textStyle = if (isSelected) MaterialTheme.typography.titleMedium.merge(
-                                    TextStyle(color = Color.White)
-                                )
+                            val textStyle = if (isSelected) MaterialTheme.typography.titleMedium.merge(TextStyle(color = Color.White))
                                 else TextStyle(
                                     fontWeight = FontWeight.SemiBold,
                                     fontSize = 17.sp,
