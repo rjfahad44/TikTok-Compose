@@ -60,7 +60,6 @@ fun FollowingScreen(
             color = SubTextColor
         )
         22.dp.Space()
-
         if (parentPagerState.settledPage == 0) {
             viewState?.contentCreators?.let {
                 VideoItem(
@@ -69,7 +68,6 @@ fun FollowingScreen(
             }
         }
     }
-
 }
 
 
