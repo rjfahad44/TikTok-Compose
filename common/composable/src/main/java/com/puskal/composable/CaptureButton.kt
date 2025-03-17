@@ -32,9 +32,7 @@ fun CaptureButton(
                 .border(width = 5.dp, color = borderColor, shape = CircleShape)
                 .padding(8.dp)
                 .background(color, CircleShape)
-                .clickable {
-                    onClickCapture()
-                }
+                .clickable{ onClickCapture() }
         )
     )
 }
