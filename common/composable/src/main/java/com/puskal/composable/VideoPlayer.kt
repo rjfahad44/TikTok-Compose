@@ -91,6 +91,7 @@ fun VideoPlayer(
                         exoPlayer.pause()
                         onVideoGoBackground()
                     }
+
                     Lifecycle.Event.ON_START -> exoPlayer.play()
                     else -> {}
                 }
