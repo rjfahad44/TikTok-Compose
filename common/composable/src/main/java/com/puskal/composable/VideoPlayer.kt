@@ -50,6 +50,7 @@ fun VideoPlayer(
     onVideoDispose: () -> Unit = {},
     onVideoGoBackground: () -> Unit = {}
 ) {
+
     val context = LocalContext.current
     var thumbnail by remember {
         mutableStateOf<Pair<Bitmap?, Boolean>>(Pair(null, true))  //bitmap, isShow
