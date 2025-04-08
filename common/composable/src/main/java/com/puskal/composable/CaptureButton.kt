@@ -26,12 +26,10 @@ fun CaptureButton(
 ) {
     Box(
         modifier = modifier.then(
-            Modifier
-                .size(size)
-                .border(width = 5.dp, color = borderColor, shape = CircleShape)
-                .padding(8.dp)
-                .background(color, CircleShape)
-                .clickable { onClickCapture() }
-        )
-    )
+        Modifier
+            .size(size)
+            .border(width = 5.dp, color = borderColor, shape = CircleShape)
+            .padding(8.dp)
+            .background(color, CircleShape)
+            .clickable { onClickCapture() }))
 }
