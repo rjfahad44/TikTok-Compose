@@ -275,19 +275,22 @@ fun SideItems(
                 item.currentViewerInteraction.isLikedByYou = it
             })
 
-
-        Icon(painter = painterResource(id = R.drawable.ic_comment),
+        Icon(
+            painter = painterResource(id = R.drawable.ic_comment),
             contentDescription = null,
             tint = Color.Unspecified,
             modifier = Modifier
                 .size(33.dp)
                 .clickable {
                     onclickComment(item.videoId)
-                })
+                },
+        )
+
         Text(
             text = item.videoStats.formattedCommentCount,
             style = MaterialTheme.typography.labelMedium
         )
+
         16.dp.Space()
 
 
