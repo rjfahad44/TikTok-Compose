@@ -75,6 +75,7 @@ fun DependencyHandler.testDependencies() {
 fun DependencyHandler.media3Dependency() {
     implementation(Libraries.AudioVideo.exoplayer)
     implementation(Libraries.AudioVideo.expplayerDash)
+    implementation(Libraries.AudioVideo.expplayerHls)
     implementation(Libraries.AudioVideo.media3Ui)
 }
 

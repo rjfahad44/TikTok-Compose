@@ -637,17 +637,126 @@ object VideoDataSource {
     }
 
 
+
+    object RemoteUrlVideos {
+        val kylie_vid1 = VideoModel(
+            videoId = "kylie_vid1",
+            authorDetails = kylieJenner,
+            videoLink = "https://flipfit-cdn.akamaized.net/flip_hls/661f570aab9d840019942b80-473e0b/video_h1.m3u8",
+            videoStats = VideoModel.VideoStats(
+                like = 409876,
+                comment = 8356,
+                share = 3000,
+                favourite = 1500
+            ),
+            description = "Draft video testing  #foryou #fyp #compose #tik",
+            audioModel = null, hasTag = listOf(),
+        )
+        val kylie_vid2 = VideoModel(
+            videoId = "kylie_vid2",
+            authorDetails = kylieJenner,
+            videoLink = "https://flipfit-cdn.akamaized.net/flip_hls/662aae7a42cd740019b91dec-3e114f/video_h1.m3u8",
+            videoStats = VideoModel.VideoStats(
+                like = 564572,
+                comment = 8790,
+                share = 2000,
+                favourite = 1546
+            ),
+            description = "Draft video testing  #foryou #fyp #compose #tik",
+            audioModel = null, hasTag = listOf(),
+        )
+        val kylie_vid3 = VideoModel(
+            videoId = "kylie_vid3",
+            authorDetails = kylieJenner,
+            videoLink = "https://flipfit-cdn.akamaized.net/flip_hls/663e5a1542cd740019b97dfa-ccf0e6/video_h1.m3u8",
+            videoStats = VideoModel.VideoStats(
+                like = 2415164,
+                comment = 5145,
+                share = 5000,
+                favourite = 2000
+            ),
+            description = "Draft video testing  #foryou #fyp #compose #tik",
+            audioModel = null, hasTag = listOf(),
+        )
+        val kylie_vid4 = VideoModel(
+            videoId = "kylie_vid4",
+            authorDetails = kylieJenner,
+            videoLink = "https://flipfit-cdn.akamaized.net/flip_hls/663d1244f22a010019f3ec12-f3c958/video_h1.m3u8",
+            videoStats = VideoModel.VideoStats(
+                like = 51626,
+                comment = 1434,
+                share = 167,
+                favourite = 633
+            ),
+            description = "Draft video testing  #foryou #fyp #compose #tik",
+            audioModel = null, hasTag = listOf(),
+        )
+        val kylie_vid5 = VideoModel(
+            videoId = "kylie_vid5",
+            authorDetails = kylieJenner,
+            videoLink = "https://flipfit-cdn.akamaized.net/flip_hls/664ce52bd6fcda001911a88c-8f1c4d/video_h1.m3u8",
+            videoStats = VideoModel.VideoStats(
+                like = 547819,
+                comment = 79131,
+                share = 8921,
+                favourite = 2901
+            ),
+            description = "Draft video testing  #foryou #fyp #compose #tik",
+            audioModel = null, hasTag = listOf(),
+        )
+        val kylie_vid6 = VideoModel(
+            videoId = "kylie_vid6",
+            authorDetails = kylieJenner,
+            videoLink = "https://flipfit-cdn.akamaized.net/flip_hls/664d87dfe8e47500199ee49e-dbd56b/video_h1.m3u8",
+            videoStats = VideoModel.VideoStats(
+                like = 4512340,
+                comment = 65901,
+                share = 8165,
+                favourite = 154
+            ),
+            description = "Draft video testing  #foryou #fyp #compose #tik",
+            audioModel = null, hasTag = listOf(),
+        )
+
+        val kylie_vid7 = VideoModel(
+            videoId = "kylie_vid7",
+            authorDetails = kylieJenner,
+            videoLink = "https://flipfit-cdn.akamaized.net/flip_hls/6656423247ffe600199e8363-15125d/video_h1.m3u8",
+            videoStats = VideoModel.VideoStats(
+                like = 612907,
+                comment = 7643,
+                share = 1291,
+                favourite = 890
+            ),
+            description = "Draft video testing  #foryou #fyp #compose #tik",
+            audioModel = null, hasTag = listOf(),
+        )
+
+        val urlVideosList = listOf(
+            kylie_vid1,
+            kylie_vid2,
+            kylie_vid3,
+            kylie_vid4,
+            kylie_vid5,
+            kylie_vid6,
+            kylie_vid7
+        )
+    }
+
+
     val videosList = arrayListOf<VideoModel>().apply {
-        addAll(KylieJennerVideos.kylieVideosList)
-        addAll(CharliePuthVideos.charliePuthVideos)
-        addAll(ImagineDragonsVideos.imageDragonsVideosList)
-        addAll(DuaLipaVideos.dualipaVideos)
-        addAll(GoogleVideos.googleVideosList)
-        addAll(DanielVideos.danielVideosList)
-        addAll(ShanaVideos.shanVideosList)
-        addAll(TaylorVideos.taylorVideos)
-        addAll(JeremyVideos.jeremeyVideosList)
-        addAll(ZoyaVideos.zoyaVideosList)
+        addAll(RemoteUrlVideos.urlVideosList)
+        addAll(RemoteUrlVideos.urlVideosList)
+//        addAll(KylieJennerVideos.kylieVideosList)
+//        addAll(CharliePuthVideos.charliePuthVideos)
+//        addAll(ImagineDragonsVideos.imageDragonsVideosList)
+//        addAll(DuaLipaVideos.dualipaVideos)
+//        addAll(GoogleVideos.googleVideosList)
+//        addAll(DanielVideos.danielVideosList)
+//        addAll(ShanaVideos.shanVideosList)
+//        addAll(TaylorVideos.taylorVideos)
+//        addAll(JeremyVideos.jeremeyVideosList)
+//        addAll(ZoyaVideos.zoyaVideosList)
     }
 
     fun fetchVideos(): Flow<List<VideoModel>> {

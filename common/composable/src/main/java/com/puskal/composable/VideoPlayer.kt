@@ -1,6 +1,7 @@
 package com.puskal.composable
 
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.ViewGroup
@@ -25,10 +26,15 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MimeTypes
 import androidx.media3.common.Player
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
@@ -56,33 +62,39 @@ fun VideoPlayer(
         mutableStateOf<Pair<Bitmap?, Boolean>>(Pair(null, true))  //bitmap, isShow
     }
 
-    LaunchedEffect(key1 = true) {
-        withContext(Dispatchers.IO) {
-            val bm = FileUtils.extractThumbnail(
-                context.assets.openFd("videos/${video.videoLink}"), 1
-            )
-            withContext(Dispatchers.Main) {
-                thumbnail = thumbnail.copy(first = bm, second = thumbnail.second)
-            }
-        }
-    }
+//    LaunchedEffect(key1 = true) {
+//        withContext(Dispatchers.IO) {
+//            val bm = FileUtils.extractThumbnail(
+//                context.assets.openFd("videos/${video.videoLink}"), 1
+//            )
+//            withContext(Dispatchers.Main) {
+//                thumbnail = thumbnail.copy(first = bm, second = thumbnail.second)
+//            }
+//        }
+//    }
 
     if (pagerState.settledPage == pageIndex) {
-        val exoPlayer = remember(context) {
-            ExoPlayer.Builder(context).build().apply {
-                videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
-                repeatMode = Player.REPEAT_MODE_ONE
-                setMediaItem(MediaItem.fromUri(Uri.parse("asset:///videos/${video.videoLink}")))
-                playWhenReady = true
-                prepare()
-                addListener(object : Player.Listener {
-                    override fun onRenderedFirstFrame() {
-                        super.onRenderedFirstFrame()
-                        thumbnail = thumbnail.copy(second = false)
-                    }
-                })
-            }
-        }
+//        val exoPlayer = remember(context) {
+//            ExoPlayer.Builder(context).build().apply {
+//                videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
+//                repeatMode = Player.REPEAT_MODE_ONE
+//                setMediaItem(MediaItem.fromUri(Uri.parse("asset:///videos/${video.videoLink}")))
+//                playWhenReady = true
+//                prepare()
+//                addListener(object : Player.Listener {
+//                    override fun onRenderedFirstFrame() {
+//                        super.onRenderedFirstFrame()
+//                        thumbnail = thumbnail.copy(second = false)
+//                    }
+//                })
+//            }
+//        }
+
+        val exoPlayer = rememberUniversalPlayer(
+            context = context,
+            uriString = video.videoLink,
+            isPlayWhenReady = true
+        )
 
         val lifecycleOwner by rememberUpdatedState(LocalLifecycleOwner.current)
         DisposableEffect(key1 = lifecycleOwner) {
@@ -139,6 +151,69 @@ fun VideoPlayer(
         )
     }
 
+}
+
+
+@androidx.media3.common.util.UnstableApi
+@Composable
+fun rememberUniversalPlayer(
+    context: Context,
+    uriString: String,
+    isPlayWhenReady: Boolean = true
+): ExoPlayer {
+
+    val player = remember(context) {
+        val upstreamFactory = DefaultHttpDataSource.Factory().apply {
+            // Optional: setUserAgent("MyApp/${BuildConfig.VERSION_NAME}")
+        }
+        val dataSourceFactory = DefaultDataSource.Factory(context, upstreamFactory)
+        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
+        ExoPlayer.Builder(context)
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build().apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+                        .setUsage(C.USAGE_MEDIA)
+                        .build(),
+                    true
+                )
+
+                repeatMode = Player.REPEAT_MODE_ONE
+                videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
+                setMediaItem(makeMediaItem(uriString))
+                playWhenReady = isPlayWhenReady
+                prepare()
+            }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { player.release() }
+    }
+    return player
+}
+
+
+private fun makeMediaItem(uriString: String): MediaItem {
+    val uri = Uri.parse(uriString)
+
+    // HLS manifests end with .m3u8 – help the parser by tagging the MIME type.
+    val mimeType = when {
+        uriString.endsWith(".m3u8", ignoreCase = true) -> MimeTypes.APPLICATION_M3U8
+        uriString.endsWith(".mp3",  ignoreCase = true) -> MimeTypes.AUDIO_MPEG
+        uriString.endsWith(".mp4",  ignoreCase = true) -> MimeTypes.VIDEO_MP4
+        else -> null                                   // Let Exo guess
+    }
+
+    return if (mimeType == null) {
+        MediaItem.fromUri(uri)
+    } else {
+        MediaItem.Builder()
+            .setUri(uri)
+            .setMimeType(mimeType)
+            .build()
+    }
 }
 
 
